@@ -1,7 +1,9 @@
 import React from "react"
 import styled from "styled-components"
+import PurchaseButton from "../buttons/PurchaseButton"
 import { themes } from "../styles/ColorStyles"
 import { H1, MediumText } from "../styles/TextStyles"
+import { Link } from "gatsby"
 
 function HeroSection() {
   return (
@@ -16,6 +18,12 @@ function HeroSection() {
             Don’t skip design. Learn design and code, by building real apps with
             React and Swift. Complete courses about the best tools.
           </Description>
+          <Link to="/page-2">
+            <PurchaseButton
+              title="Start learning"
+              subtitle="120+ hours of video"
+            />
+          </Link>
         </TextWrapper>
       </ContentWrapper>
     </Wrapper>
