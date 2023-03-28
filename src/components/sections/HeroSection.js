@@ -12,12 +12,12 @@ function HeroSection() {
       <ContentWrapper>
         <TextWrapper>
           <Title>
-            Design <br />
-            and code React apps
+            Getting <br />
+            freaky with React apps
           </Title>
           <Description>
-            Don’t skip design. Learn design and code, by building real apps with
-            React and Swift. Complete courses about the best tools.
+            Making sites your Momma loves. Crafting design and code. Building
+            shit that solves problems.
           </Description>
           <Link to="/page-2">
             <PurchaseButton

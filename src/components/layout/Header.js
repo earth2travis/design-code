@@ -7,6 +7,13 @@ import MenuTooltip from "../tooltips/MenuTooltip"
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
+
+  function handleClick(event) {
+    setIsOpen(!isOpen)
+    event.preventDefault()
+    console.log(event)
+  }
+
   return (
     <Wrapper>
       <Link to="/">
@@ -18,7 +25,7 @@ export default function Header() {
             <MenuButton
               item={item}
               key={index}
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={event => handleClick(event)}
             />
           ) : (
             <MenuButton item={item} key={index} />
