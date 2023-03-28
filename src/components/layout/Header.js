@@ -1,15 +1,21 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import { menuData } from "../../data/menuData"
-import MenuButton from "../buttons/MenuButton"
 import { Link } from "gatsby"
+import MenuButton from "../buttons/MenuButton"
+import { menuData } from "../../data/menuData"
 import MenuTooltip from "../tooltips/MenuTooltip"
+import SearchTooltip from "../tooltips/SearchTooltip"
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
 
-  function handleClick(event) {
-    setIsOpen(!isOpen)
+  function handleClick(event, type) {
+    // This if statement is sus
+    if (type === "search") {
+      setIsOpen(true)
+    } else {
+      setIsOpen(!isOpen)
+    }
     event.preventDefault()
     console.log(event)
   }
@@ -21,7 +27,7 @@ export default function Header() {
       </Link>
       <MenuWrapper count={menuData.length}>
         {menuData.map((item, index) =>
-          item.link === "/account" ? (
+          item.link === "/account" || "/search" ? (
             <MenuButton
               item={item}
               key={index}
@@ -32,6 +38,7 @@ export default function Header() {
           )
         )}
       </MenuWrapper>
+      <SearchTooltip isOpen={isOpen} />
       <MenuTooltip isOpen={isOpen} />
     </Wrapper>
   )
