@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
 import MenuButton from "../buttons/MenuButton"
@@ -8,6 +8,8 @@ import SearchTooltip from "../tooltips/SearchTooltip"
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const ref = useRef()
+  const tooltipRef = useRef()
 
   function handleClick(event, type) {
     // This if statement is sus
@@ -17,15 +19,34 @@ export default function Header() {
       setIsOpen(!isOpen)
     }
     event.preventDefault()
-    console.log(event)
+    // console.log(event)
   }
+
+  function handleClickOutside(event) {
+    if (
+      ref.current &&
+      !ref.current.contains(event.target) &&
+      !tooltipRef.current.contains(event.target)
+    ) {
+      console.log("Clicked Outside")
+      setIsOpen(false)
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside)
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
 
   return (
     <Wrapper>
       <Link to="/">
         <img src="/images/logos/logo.svg" alt="logo" />
       </Link>
-      <MenuWrapper count={menuData.length}>
+      <MenuWrapper count={menuData.length} ref={ref}>
         {menuData.map((item, index) =>
           item.link === "/account" || "/search" ? (
             <MenuButton
@@ -39,12 +60,17 @@ export default function Header() {
         )}
         <HamburgerWrapper>
           <MenuButton
-            item={{ title: "", icon: "/images/icons/hamburger.svg", link: "" }}
+            item={{ title: "", icon: "/images/icons/hamburger.svg", link: "/" }}
+            onClick={event => handleClick(event)}
           />
         </HamburgerWrapper>
       </MenuWrapper>
-      <SearchTooltip isOpen={isOpen} />
-      <MenuTooltip isOpen={isOpen} />
+      <div ref={tooltipRef}>
+        <SearchTooltip isOpen={isOpen} />
+      </div>
+      <div ref={tooltipRef}>
+        <MenuTooltip isOpen={isOpen} />
+      </div>
     </Wrapper>
   )
 }
